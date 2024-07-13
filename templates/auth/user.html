@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}User Page{% endblock %}
+
+{% block content %}
+<div class="text-start">
+    <p><a href="{{ url_for('meeting.index') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+    <h1 class="color-grey">こんにちは、<b>{{ g.user['nickname'] }}</b> 様</h1>
+
+    <div style="height:32px;"></div>
+
+    <table border="1">
+        <tr>
+            <th colspan="2"><label for="">アカウント情報</label></th>
+        </tr>
+
+        <tr>
+            <th>ID</th>
+            <td>
+                {{ g.user['id'] }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>ユーザーID</th>
+            <td>
+                {{ g.user['user_id'] }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>ユーザー名</th>
+            <td>
+                {{ g.user['nickname'] }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>パスワード</th>
+            <td>非表示</td>
+        </tr>
+    </table>
+
+    <div style="height:48px;"></div>
+    <h3 class="color-grey">アカウント情報更新</h3>
+
+    <div class="ul-center">
+        <ul>
+            <li>
+                <a href="{{ url_for('auth.nickname') }}">
+                    <label><u>ユーザー名の変更</u></label>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('auth.password') }}">
+                    <label><u>パスワードの変更</u></label>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('auth.delete') }}">
+                    <label><u>アカウントの削除</u></label>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+</div>
+{% endblock %}

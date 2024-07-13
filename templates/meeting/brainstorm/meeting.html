@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Room ID = {{ room_id }}{% endblock %}
+
+{% block header %}
+<header>
+    <label class="header-l">Room ID = {{ room_id }}</label>
+    <a href="{{ url_for('meeting.index') }}" onclick="return confirm('ルームを退出しますか？');" class="header-r">
+        <img src="{{ url_for('static', filename='img/logout.png') }}" alt="icon">
+    </a>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<p class="p-red">注意：適宜、ブラウザをリロードしてご利用ください。</p>
+{% if g.user %}
+<div>
+    <a href="{{ url_for('meeting.post', room_id = room_id)}}">
+        <div class="post-btn">
+            <p>+</p>
+        </div>
+    </a>
+</div>
+{% endif %}
+
+
+{% for post in posts %}
+
+<div class="post" id="{{ post['id'] }}">
+    <div class="post-title">
+        <p class="p-nowrap">ID:{{ post['id'] }}|{{ post['created'].strftime('%H時%M分%S秒') }}</p>
+        <p class="p-small">
+            投稿者：
+            {% if post['public'] == 0 %}
+            匿名
+            {% else %}
+            <span class="color-blue">{{ post['nickname'] }}</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="post-main">
+        <p class="p-post">{{ post['main'] }}</p>
+
+        {% if post['edit'] == 1 %}
+        <p class="p-small">（編集済み）</p>
+        {% endif %}
+
+        <div style="height: 8px;"></div>
+        {% if g.user['id'] == post['author_id'] %}
+        <div class="post-bottom">
+            <p>投票数：{{ post['vote_count'] }}</p>
+        </div>
+        <div class="post-bottom">
+            <p>
+                <a class="color-grey"
+                    href="{{ url_for('meeting.update',room_id = room_id, post_id=post['id']) }}">
+                    Edit
+                </a>
+            </p>
+            <p>|</p>
+            <p>
+                {% if post['public'] == 0 %}
+                <a class="color-grey"
+                        href="{{ url_for('meeting.post_public',room_id = room_id, post_id=post['id']) }}">
+                    匿名解除
+                </a>
+                {% else %}
+                <a class="color-grey"
+                        href="{{ url_for('meeting.post_public',room_id = room_id, post_id=post['id']) }}">
+                    匿名化
+                </a>
+                {% endif %}
+            </p>
+        </div>
+        {% else %}
+        <div class="post-bottom">
+            <p>
+                {% if post['vote_user'] == 0 %}
+                <a class="color-grey"
+                        href="{{ url_for('meeting.vote',room_id = room_id, post_id=post['id']) }}">
+                        投票
+                </a>
+                {% else %}
+                <a class="color-blue"
+                        href="{{ url_for('meeting.vote',room_id = room_id, post_id=post['id']) }}">
+                        投票
+                </a>
+                {% endif %}
+            </p>
+            <p>|</p>
+            <p>{{ post['vote_count'] }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+<!-- 親テンプレートである base.html を継承 -->
+{% block title %}Room Delete{% endblock %}
+
+{% block content %}
+<div class="text-start">
+    <p><a href="{{ url_for('room.update') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+
+    <div class="account-updata-alart">
+        <h1 class="color-grey">ルームの削除</h1>
+        <p>ルームを削除する場合は、ルームIDとパスワードを入力し削除ボタンを押してください。</p>
+
+        <form method="post">
+
+            <label for="room_id">ルームID</label>
+            <p class="p-small" id="room_id-alart"></p>
+            <input type="text" name="room_id" id="room_id" minlength="8" maxlength="48"
+            oninput="FormCount('room_id', 8, 48);">
+            <!-- ルーム名の入力フィールド -->
+
+            <label for="password">パスワード</label>
+            <p class="p-small" id="password-alart"></p>
+            <input type="password" name="password" id="password"  minlength="8" maxlength="48"
+            oninput="FormCount('password', 8, 48);">
+            <!-- パスワードの入力フィールド -->
+
+            <input type="hidden" name="token" id="token" value="{{ token }}">
+            <div style="height:20px;"></div>
+
+            <p class="p-red">
+                注意：削除したルームは復元できません
+            </p>
+            <button class="button-red" type="submit" onclick="return confirm('ルームを削除します。削除したルームは復元できません。');">
+                ルーム削除
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+<!-- 親テンプレートである base.html を継承 -->
+{% block title %}Room Auth{% endblock %}
+
+{% block content %}
+<div class="text-start">
+    <p><a href="{{ url_for('meeting.index') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+    <h1>ミーティングへ参加</h1>
+
+    <form method="post">
+        <!-- ログインフォームを定義 -->
+        <label for="room_id">ルームID</label>
+        <p class="p-small" id="room_id-alart"></p>
+        <input type="text" name="room_id" id="room_id"  minlength="8" maxlength="48"
+        oninput="FormCount('room_id', 8, 48);">
+        <!-- ユーザー名の入力フィールド -->
+
+        <label for="password">パスワード</label>
+        <p class="p-small" id="password-alart"></p>
+        <input type="password" name="password" id="password"  minlength="8" maxlength="48"
+        oninput="FormCount('password', 8, 48);">
+        <!-- パスワードの入力フィールド -->
+
+        <input type="hidden" name="token" id="token" value="{{ token }}">
+        
+        <button type="submit">参加する</button>
+        <!-- 送信ボタン -->
+    </form>
+
+    <div style="height:24px;"></div>
+
+</div>
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

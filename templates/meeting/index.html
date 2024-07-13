@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block hamburger %}
+{% if g.user %}
+<div id="hamburger" class="">
+  <a class="hamburger-button" onclick="HamburgerIn();">
+      <span class="hamburger-line hamburger-line-t"></span>
+      <span class="hamburger-line hamburger-line-m"></span>
+      <span class="hamburger-line hamburger-line-b"></span>
+  </a>
+  <div class="hamburger-content">
+      <div style="height: 85px;"></div>
+      <div>
+        <a href="{{ url_for('auth.user') }}">
+          <img src="{{ url_for('static', filename='img/user.png') }}"
+          alt="ユーザーアイコン" class="hum-icon">
+          <div>
+            <label>ようこそ、{{ g.user['nickname'] }} 様</label>
+          </div>
+        </a>
+      </div>
+
+
+      <div class="ul-center">
+        <ul>
+            <li>
+              <a href="{{ url_for('auth.user') }}">
+                <label><u>ユーザー情報の確認</u></label>
+              </a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.nickname') }}">
+                    <label><u>ユーザー名の変更</u></label>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('auth.password') }}">
+                    <label><u>パスワードの変更</u></label>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('auth.delete') }}">
+                    <label><u>アカウントの削除</u></label>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+  </div>
+  <a class="hamburger-out" onclick="HamburgerOut();"></a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block header %}
+<header style="position: fixed;">
+  {% if g.user %}
+  <label class="header-l">ようこそ、{{ g.user['nickname'] }} 様</label>
+  <a href="{{ url_for('auth.logout') }}" onclick="return confirm('ログアウトしますか？')" class="header-r">
+    <img src="{{ url_for('static', filename='img/logout.png') }}" alt="icon">
+  </a>
+  <div style="width: 40px;"></div>
+  {% else %}
+  <label class="header-l">Brainstor Meeting</label>
+  <p class="header-r"><a href="{{ url_for('auth.login') }}">ログイン</a></p>
+  {% endif %}
+</header>
+{% endblock %}
+
+{% block content %}
+<div style="height: 40px;"></div>
+<div class="wrap centered-box">
+  <h1 class="color-grey">Brainstor Meeting へようこそ!</h1>
+
+  <p>
+    <a class="color-grey" href="#1"><b>Meetingへ参加</b></a>するか、<a class="color-grey" href="#2"><b>Meetingを作成</b></a>して
+    、みんなで話合いましょう！
+    <br><br>
+  </p>
+  <div>
+    <p>
+      Brainstor Meetingを使用して沢山のアイデアを出しましょう！
+      <br>
+      匿名で投稿することもできますし、任意のタイミングで匿名を解除することも可能です。
+      また、投票機能を使用するできますので、うまく活用していただけると幸いです。
+    </p>
+  </div>
+
+  <div style="height:84px;"></div>
+
+  <h3 id="1" class="color-grey">【Meetingへ参加】</h3>
+  <p>ルームID、パスワードを入力して、匿名のMeeting Roomへ参加しましょう。</p>
+
+  <div style="height:20px;"></div>
+
+  {% if g.user %}
+
+  <div>
+    <a href="{{ url_for('meeting.auth') }}">
+      <button>参加する</button>
+    </a>
+  </div>
+
+  {% else %}
+
+  <div>
+    <a href="{{ url_for('auth.login') }}">
+      <button>ログインする</button>
+    </a>
+  </div>
+
+  {% endif %}
+
+
+  <div style="height:84px;"></div>
+
+
+  <h3 id="2" class="color-grey">【Meetingを作成】</h3>
+  <p>
+    ID、パスワードを知っている人だけが参加できる匿名のMeeting Roomを作成します。
+  </p>
+
+  <div style="height:20px;"></div>
+
+  {% if g.user %}
+
+  <div>
+    <a href="{{ url_for('room.create') }}">
+      <button>作成する</button>
+    </a>
+  </div>
+
+  {% else %}
+
+  <div>
+    <a href="{{ url_for('auth.login') }}">
+      <button>ログインする</button>
+    </a>
+  </div>
+
+  {% endif %}
+  <div style="height:84px;"></div>
+
+  {% if g.owner %}
+
+  <h3  class="color-grey">【作成したミーティング】</h3>
+  <p>
+    Meetig Roomのパスワードの更新、削除ができます。
+  </p>
+
+  <div style="height:16px;"></div>
+
+  <table border="1">
+    <tr>
+      <th colspan="2"><label>作成したミーティング</label></th>
+    </tr>
+
+    <tr>
+      <th>ルームID</th>
+      <td>{{ g.owner['room_name'] }}</td>
+    </tr>
+
+    <tr>
+      <th>パスワード</th>
+      <td>非表示</tr>
+  </table>
+
+  <div style="height:16px;"></div>
+
+  <div>
+    <a href="{{ url_for('room.update') }}">
+      <button>更新する</button>
+    </a>
+  </div>
+
+  <div style="height:64px;"></div>
+  {% endif %}
+
+</div>
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

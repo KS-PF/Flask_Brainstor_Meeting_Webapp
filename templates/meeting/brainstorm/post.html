@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Post{% endblock %}
+
+{% block content %}
+
+  <div class="text-start">
+    <p><a href="{{ url_for('meeting.meeting', room_id = room_id) }}">←Back</a></p>
+  </div>
+  
+  <div class="wrap centered-box">
+    <h2>POST</h2>
+
+    <form method="post">
+      <p class="p-small" id="main-alart"></p>
+      <textarea name="main" id="main"
+      oninput="FormCount('main', 3, 148);"
+      minlength="3"
+      maxlength="148"
+      ></textarea>
+      
+      <div style="height:20px;"></div>
+      <input type="hidden" name="token" id="token" value="{{ token }}">
+  
+      <button type="submit">POST</button>
+      <!-- 送信ボタン -->
+    </form>
+  
+    <div style="height:24px;"></div>
+  
+  </div>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

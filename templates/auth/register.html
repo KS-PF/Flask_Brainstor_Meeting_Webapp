@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+<!-- 親テンプレートである base.html を継承 -->
+{% block title %}Register{% endblock %}
+
+
+{% block content %}
+<div class="text-start">
+  <p><a href="{{ url_for('meeting.index') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+  <h1>新規登録</h1>
+
+  <form method="post">
+    <!-- 登録フォームを定義 -->
+    <label for="user_id">ユーザーID</label>
+    <p class="p-small" id="user_id-alart"></p>
+    <input type="text" name="user_id" id="user_id" minlength="8" maxlength="48"
+    oninput="FormCount('user_id', 8, 48);" required>
+    <!-- ユーザー名の入力フィールド -->
+
+    <label for="nickname">ユーザー名</label>
+    <p class="p-small" id="nickname-alart"></p>
+    <input type="text" name="nickname" id="nickname"  minlength="3" maxlength="24"
+    oninput="FormCount('nickname', 3, 24);" required>
+    
+    <label for="password">パスワード</label>
+    <p class="p-small" id="password-alart"></p>
+    <input type="password" name="password" id="password"  minlength="8" maxlength="48"
+    oninput="FormCount('password', 8, 48);" required>
+    <!-- パスワードの入力フィールド -->
+
+    <label for="confirm">パスワード（確認）</label>
+    <p class="p-small" id="confirm-alart"></p>
+    <input type="password" name="confirm" id="confirm" 
+    oninput="FormCount('confirm', 8, 48);" required>
+    <!-- パスワードの入力フィールド -->
+    
+    <div style="height:24px;"></div>
+
+    <label for="sc_text">下画像のテクスト入力</label>
+    <input type="text" name="sc_text" id="sc_text"  required>
+
+    <input type="hidden" name="sc_num" id="sc_num" value="{{ num }}">
+    <input type="hidden" name="token" id="token" value="{{ token }}">
+    <img class="sc-img" 
+    src="{{ url_for('static', filename= sc_path ) }}" 
+    alt="画像">
+
+    <div style="height:24px;"></div>
+
+    <p class="p-red">注意事項：ユーザーIDとパスワードはログインに使用します。忘れないように保存してください。</p>
+    <button type="submit">登録する</button>
+    <!-- 送信ボタン -->
+  </form>
+
+  <div style="height:48px;"></div>
+
+</div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

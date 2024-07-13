@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}" sizes="any">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/icon.png') }}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Brainstor Meeting Web Application">
+
+  <title>{% block title %}{% endblock %} - Brainstor Meeting</title>
+  <!-- ページタイトルをブロックとして定義し、各テンプレートでカスタマイズ可能にする -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  {% block hamburger %}{% endblock %}
+
+  {% block header %}{% endblock %}
+  <!-- ヘッダー部分のブロックを定義 -->
+
+
+  <main>
+
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    <!-- フラッシュメッセージの表示 -->
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+    <!-- コンテンツ部分のブロックを定義 -->
+
+  </main>
+
+  <footer>
+
+    <div>
+      <label>Brainstor Meeting</label>
+    </div>
+
+    <div>
+      <nav>
+        {% if g.user %}
+        <p>ようこそ、{{ g.user['nickname'] }} 様</p>
+        <p>|</p>
+        <p><a href="{{ url_for('auth.logout') }}" onclick="return confirm('ログアウトしますか？')">ログアウト</a></p>
+
+        {% else %}
+        <p><a href="{{ url_for('auth.register') }}">新規登録</a></p>
+        <p>|</p>
+        <p><a href="{{ url_for('auth.login') }}">ログイン</a></p>
+        {% endif %}
+      </nav>
+    </div>
+
+    <div>
+      <img src="{{ url_for('static', filename='img/icon.png') }}" alt="KS-PF">
+    </div>
+
+
+    <p>Made by KS-PF | 2023~2024</p>
+    <p>All rights reserved</p>
+
+  </footer>
+
+</body>
+
+</html>

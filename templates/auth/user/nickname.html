@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!-- 親テンプレートである base.html を継承 -->
+{% block title %}Username Update{% endblock %}
+
+{% block content %}
+<div class="text-start">
+    <p><a href="{{ url_for('auth.user') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+    <h1 class="color-grey">ユーザー名変更</h1>
+
+    <form method="post">
+        <label for="nickname">新しいユーザー名</label>
+        <p class="p-small" id="nickname-alart"></p>
+        <input type="text" name="nickname" id="nickname" value="{{ name }}" minlength="3" maxlength="24"
+            oninput="FormCount('nickname', 3, 24);"  required>
+
+        <input type="hidden" name="token" id="token" value="{{ token }}">
+
+        <button class="button-red" type="submit" >更新する</button>
+
+    </form>
+</div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

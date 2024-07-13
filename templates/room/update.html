@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+<!-- 親テンプレートである base.html を継承 -->
+{% block title %}Room Update{% endblock %}
+
+{% block content %}
+<div class="text-start">
+  <p><a href="{{ url_for('meeting.index') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+  <h1>ルームの更新</h1>
+
+  <div style="height:16px;"></div>
+
+  <h3 class="color-grey">【パスワードの更新】</h3>
+
+  <form method="post">
+
+
+    <label for="password">現在のパスワード</label>
+    <p class="p-small" id="password-alart"></p>
+    <input type="password" name="password" id="password"  minlength="8" maxlength="48"
+    oninput="FormCount('password', 8, 48);">
+
+    <label for="new_password">新しいパスワード</label>
+    <p class="p-small" id="new_password-alart"></p>
+    <input type="password" name="new_password" id="new_password"  minlength="8" maxlength="48"
+    oninput="FormCount('new_password', 8, 48);">
+
+    <label for="confirm">新しいパスワード（確認）</label>
+    <p class="p-small" id="confirm-alart"></p>
+    <input type="password" name="confirm" id="confirm"  minlength="8" maxlength="48"
+    oninput="FormCount('confirm', 8, 48);">
+
+    <input type="hidden" name="token" id="token" value="{{ token }}">
+
+    <button class="button-red" type="submit">更新する</button>
+
+  </form>
+
+
+
+  <div style="height:84px;"></div>
+
+  <h3 class="color-grey">【ルームの削除】</h3>
+  <p>ミーティングルームを削除します。</p>
+  <div style="height:16px;"></div>
+  <p class="p-red">注意：一度削除したMeeting Roomを戻すことはできません。</p>
+  <p>
+    <a href="{{ url_for('room.delete') }}">
+      <button class="button-red"> 削除する </button>
+    </a>
+  </p>
+
+  <div style="height:48px;"></div>
+</div>
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

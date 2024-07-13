@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+<!-- 親テンプレートである base.html を継承 -->
+{% block title %}Accout Delete{% endblock %}
+
+{% block content %}
+<div class="text-start">
+    <p><a href="{{ url_for('auth.user') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+
+    <div class="account-updata-alart">
+        <h1 class="color-grey">アカウントの削除</h1>
+        <p>アカウントを削除する場合は、ユーザーIDとパスワードを入力しアカウント削除ボタンを押してください。</p>
+
+        <form method="post">
+
+            <label for="user_id">ユーザーID</label>
+            <p class="p-small" id="user_id-alart"></p>
+            <input type="text" name="user_id" id="user_id"  minlength="8" maxlength="48"
+            oninput="FormCount('user_id', 8, 48);" required>
+            <!-- ユーザー名の入力フィールド -->
+        
+            <label for="password">パスワード</label>
+            <p class="p-small" id="password-alart"></p>
+            <input type="password" name="password" id="password"  minlength="8" maxlength="48"
+            oninput="FormCount('password', 8, 48);" required>
+            <!-- パスワードの入力フィールド -->
+
+            <div style="height:20px;"></div>
+            <input type="hidden" name="token" id="token" value="{{ token }}">
+
+            <p class="p-red">
+                注意：削除したアカウントは復元できません
+            </p>
+            <button class="button-red" type="submit" onclick="return confirm('アカウントを削除します。削除したアカウントは復元できません。');">
+                アカウント削除
+            </button>
+        </form>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

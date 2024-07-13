@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+<!-- 親テンプレートである base.html を継承 -->
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="text-start">
+  <p><a href="{{ url_for('meeting.index') }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+  <h1>ログイン</h1>
+
+  <form method="post">
+    <!-- ログインフォームを定義 -->
+    <label for="user_id">ユーザーID</label>
+    <p class="p-small" id="user_id-alart"></p>
+    <input type="text" name="user_id" id="user_id"  minlength="8" maxlength="48"
+    oninput="FormCount('user_id', 8, 48);" required>
+    <!-- ユーザー名の入力フィールド -->
+
+    <label for="password">パスワード</label>
+    <p class="p-small" id="password-alart"></p>
+    <input type="password" name="password" id="password"  minlength="8" maxlength="48"
+    oninput="FormCount('password', 8, 48);" required>
+    <!-- パスワードの入力フィールド -->
+  
+    <input type="hidden" name="token" id="token" value="{{ token }}">
+    <div style="height:20px;"></div>
+
+    <button type="submit">ログイン</button>
+    <!-- 送信ボタン -->
+  </form>
+
+  <div style="height:24px;"></div>
+
+  <div>
+    <p>アカウントはお持ちですか？<a class="color-grey" href="{{ url_for('auth.register') }}"><b>新規登録する</b></a></p>
+  </div>
+
+  <div style="height:24px;"></div>
+</div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

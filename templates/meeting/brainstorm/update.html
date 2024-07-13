@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+
+<div class="text-start">
+    <p><a href="{{ url_for('meeting.meeting', room_id = room_id) }}">←Back</a></p>
+</div>
+
+<div class="wrap centered-box">
+    <h2>Edit</h2>
+
+    <form method="post">
+        <p class="p-small" id="main-alart"></p>
+        <textarea name="main" id="main"
+        oninput="FormCount('main', 3, 148);"
+        minlength="3"
+        maxlength="148">
+            {{ request.form['main'] or post['main'] }}
+        </textarea>
+
+        <div style="height:20px;"></div>
+        <input type="hidden" name="token" id="token" value="{{ token }}">
+
+        <button type="submit">更新する</button>
+        <!-- 送信ボタン -->
+    </form>
+
+    <div style="height:32px;"></div>
+
+    <hr>
+
+    <div>
+        <form action="{{ url_for('meeting.delete',room_id = room_id, post_id=post['id']) }}" method="post">
+            <button class="button-red"  type="submit" onclick="return confirm('投稿を削除しますか?');">
+                削除する
+            </button>
+        </form>
+    </div>
+
+
+</div>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}
