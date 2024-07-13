@@ -64,6 +64,41 @@ $ python3 -c 'import secrets; print(secrets.token_hex())'
 ```
 
 ### 構成
+/
+ミーティングの参加を行う
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+
+/room/auth
+/room/<string:room_id>
+/room/<string:room_id>/post
+/room/<string:room_id>/update/<int:post_id>
+/room/<string:room_id>/delete/<int:post_id>
+/room/<string:room_id>/vote/<int:post_id>
+/room/<string:room_id>/public/<int:post_id>
+
+/room/create
+/room/update
+/room/delete
+
+
+/auth　
+ユーザーの認証、管理を行う
+/auth/registe
+/auth/login
+/auth/logout
+/auth/user
+/auth/nickname
+/auth/password
+/auth/delete
 
 
 ### 画像
