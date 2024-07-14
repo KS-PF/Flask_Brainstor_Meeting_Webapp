@@ -81,6 +81,7 @@ $ python3 -c 'import secrets; print(secrets.token_hex())'
 ```
 
 ### 画像
+
 #### アカウント作成
 ![イメージ](images_for_readme/0.png)
 ![イメージ](images_for_readme/1.png)
