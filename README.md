@@ -67,7 +67,7 @@ brainstor_meeting
     └── ...
 ```
 
-### コマンド
+### ローカル環境で実行するためのコマンド
 ```
 brainstor_meeting　$ pip install Flask
 brainstor_meeting　$ flask --app project run --debug
