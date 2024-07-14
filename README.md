@@ -83,7 +83,7 @@ brainstor_meeting　$ source venv/bin/activate
 brainstor_meeting　$ pip install Flask
 brainstor_meeting　$ mkdir project
 brainstor_meeting　$ cd project
-brainstor_meeting　$ git clone ""
+brainstor_meeting　$ git clone https://github.com/KS-PF/Flask_brainstor_meeting_Webapp.git
 brainstor_meeting　$ cd ../
 brainstor_meeting　$ flask --app project init-db
 brainstor_meeting　$ flask --app project run --debug
