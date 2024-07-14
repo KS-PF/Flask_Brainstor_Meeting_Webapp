@@ -67,14 +67,29 @@ brainstor_meeting
     └── ...
 ```
 
-### ローカル環境で実行するためのコマンド
+### コマンド
+ローカルで実行するためのコマンド（MacBookの場合）
 ```
+$ mkdir brainstor_meeting
+$ cd brainstor_meeting
+brainstor_meeting　$ python -m venv venv
+brainstor_meeting　$ source venv/bin/activate
 brainstor_meeting　$ pip install Flask
+brainstor_meeting　$ mkdir project
+brainstor_meeting　$ cd project
+brainstor_meeting　$ git clone ""
+brainstor_meeting　$ cd ../
+brainstor_meeting　$ flask --app project init-db
 brainstor_meeting　$ flask --app project run --debug
 ```
 SECRET_KEYの生成
 ```
 $ python3 -c 'import secrets; print(secrets.token_hex())'
+```
+
+仮想環境の終了
+```
+$ deactivate
 ```
 
 ### 画像
