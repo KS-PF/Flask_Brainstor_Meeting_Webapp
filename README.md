@@ -68,14 +68,11 @@ brainstor_meeting
 ```
 
 ### コマンド
-projectフォルダを作成し、そこで仮想環境を作り実行してください。
 ```
-brainstor_meeting　$ python3 -m venv .venv
-brainstor_meeting　$ source .venv/bin/activate
 brainstor_meeting　$ pip install Flask
 brainstor_meeting　$ flask --app project run --debug
 ```
-また、キーを生成して、SECRET_KEYに貼り付けてください。
+SECRET_KEYの生成
 ```
 $ python3 -c 'import secrets; print(secrets.token_hex())'
 ```

@@ -6,7 +6,7 @@ def create_app():
     app = Flask(__name__, instance_relative_config=True)
     
     app.config.from_mapping(
-        SECRET_KEY='needchangeyoursecretkey',  # セッションやクッキーのセキュリティ用の秘密鍵
+        SECRET_KEY='needchangesecretkey',  # セッションやクッキーのセキュリティ用の秘密鍵
         # python3 -c 'import secrets; print(secrets.token_hex())' を利用して新しいキーを作成して貼り付ける
         DATABASE=os.path.join(app.instance_path, 'project.sqlite'), 
     )
