@@ -92,7 +92,7 @@ $ python3 -c 'import secrets; print(secrets.token_hex())'
 $ deactivate
 ```
 
-### 画像
+### ローカル実行時の画像
 
 #### アカウント作成
 ![イメージ](images_for_readme/0.png)
