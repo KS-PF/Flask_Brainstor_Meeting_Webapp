@@ -29,7 +29,7 @@ def get_room_owner(user_id):
 
 
 @bp.route('/create', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required 
 def create():
     
     room_limit = 9
@@ -81,17 +81,14 @@ def create():
             user_id = g.user["id"]
 
             try:
-                # 新しいユーザーをデータベースに挿入
                 db.execute(
                     "INSERT INTO rooms (create_user_id, room_name, password) VALUES (?, ?, ?)",
-                    ( user_id, room_id, generate_password_hash(password)),  # パスワードをハッシュ化して保存
+                    ( user_id, room_id, generate_password_hash(password)), 
                 )
-                db.commit()  # 変更をコミット
+                db.commit() 
             except db.IntegrityError:
-                # ユーザー名が既に登録されている場合のエラー処理
                 error = f"ERROR: ルームID、 {room_id} は既に使用されています"
             else:
-                # 成功した場合、ログインページにリダイレクト
                 response_data = redirect(url_for("meeting.auth"))
                 return secure_response_headers(response_data)
 
@@ -106,7 +103,7 @@ def create():
 
 
 @bp.route('/update', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required 
 def update():
     get_room_owner(g.user['id'])
     if g.owner is None:

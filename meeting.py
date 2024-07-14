@@ -111,7 +111,6 @@ def auth():
 
         if error is None:
             db = get_db()  # データベース接続を取得
-            # データベースからユーザーを取得
             data = db.execute(
                 'SELECT * FROM rooms WHERE room_name = ?', (room_id,)
             ).fetchone()
@@ -128,9 +127,9 @@ def auth():
             session['session_room_id'] = data['id']
             session['session_room_name'] = data['room_name']
             response_data =   redirect(url_for('meeting.meeting', room_id=room_id))  
-            return secure_response_headers(response_data)# インデックスページにリダイレクト
+            return secure_response_headers(response_data)
 
-        flash(error)  # エラーメッセージを表示
+        flash(error)  # 
 
     token = token_check('set')
     response_data = render_template('meeting/auth.html', token = token)
@@ -140,12 +139,12 @@ def auth():
 
 
 @bp.route('/room/<string:room_id>', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required 
 @auth_required
 def meeting(room_id):
     room_id_check(room_id)
     
-    db = get_db()  # データベース接続を取得
+    db = get_db() 
     rooms_id = session.get('session_room_id')
     user_id = g.user['id']
     posts = db.execute(
@@ -164,12 +163,12 @@ def meeting(room_id):
 
 
 @bp.route('/room/<string:room_id>/post', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required  
 @auth_required
 def post(room_id):
     room_id_check(room_id)
     if request.method == 'POST':
-        main = request.form.get('main', default=None, type=str)  # フォームからタイトルを取得
+        main = request.form.get('main', default=None, type=str) 
         post_token = request.form.get('token', default=None, type=str)
 
         error = None
@@ -185,7 +184,7 @@ def post(room_id):
             error = 'もう一度入力してください'
 
         if error is not None:
-            flash(error)  # エラーメッセージを表示     
+            flash(error)  #      
         else:
             author_id = g.user['id']
             rooms_id = session.get('session_room_id')
@@ -197,7 +196,7 @@ def post(room_id):
             )  # 新しい投稿をデータベースに挿入
             db.commit()  # 変更をコミット
             response_data =   redirect(url_for('meeting.meeting', room_id=room_id))  
-            return secure_response_headers(response_data)# インデックスページにリダイレクト
+            return secure_response_headers(response_data)
 
     token = token_check('set')
     response_data =  render_template('meeting/brainstorm/post.html', room_id=room_id, token = token)  # 作成ページをレンダリング
@@ -215,7 +214,7 @@ def update(room_id,post_id):
 
     if request.method == 'POST':
         post_id = int_check(post_id)
-        main = request.form.get('main', default=None, type=str) # フォームからタイトルを取得
+        main = request.form.get('main', default=None, type=str) 
         post_token = request.form.get('token', default=None, type=str)
 
         error = None
@@ -231,20 +230,20 @@ def update(room_id,post_id):
             error = 'もう一度入力してください'
 
         if error is not None:
-            flash(error)  # エラーメッセージを表示
+            flash(error)  
         else:
-            db = get_db()  # データベース接続を取得
+            db = get_db()
             db.execute(
                 'UPDATE posts SET  main = ?, edit = 1 '
                 ' WHERE id = ?',
                 (main, post_id)
-            )  # 投稿を更新
-            db.commit()  # 変更をコミット
+            )  
+            db.commit()  
 
             id_num = "#" + str(post_id)
 
             response_data =   redirect(url_for('meeting.meeting', room_id=room_id) + id_num)  
-            return secure_response_headers(response_data)# インデックスページにリダイレクト
+            return secure_response_headers(response_data)
 
     token = token_check('set')
     response_data =  render_template('meeting/brainstorm/update.html', post=post, room_id =room_id, post_id = post_id, token = token)  # 更新ページをレンダリング
@@ -264,7 +263,7 @@ def delete(room_id, post_id):
     db.execute('DELETE FROM posts WHERE id = ?', (post_id,))
     db.commit()  # 変更をコミット
     response_data =   redirect(url_for('meeting.meeting', room_id=room_id))  
-    return secure_response_headers(response_data)# インデックスページにリダイレクト
+    return secure_response_headers(response_data) 
 
 
 
@@ -289,32 +288,32 @@ def vote(room_id, post_id):
     cnt = int(vote['cnt'])
 
     if cnt == 0:
-        db = get_db()  # データベース接続を取得
+        db = get_db()  
         db.execute(
                 'INSERT INTO votes (post_id, user_id, room_id)'
                 ' VALUES (?, ?, ?)',
                 (post_id, user_id, room_id)
             ) 
-        db.commit()  # 変更をコミット
+        db.commit()  
     else:
-        db = get_db()  # データベース接続を取得
+        db = get_db() 
         db.execute(
                 'DELETE FROM votes '
                 'WHERE post_id = ? AND user_id = ? AND room_id  = ?', 
                 (post_id, user_id, room_id)
             ) 
-        db.commit()  # 変更をコミット
+        db.commit()
 
     id_num = "#" + str(post_id)
 
     response_data =   redirect(url_for('meeting.meeting', room_id=room_id) + id_num)  
-    return secure_response_headers(response_data)# インデックスページにリダイレクト
+    return secure_response_headers(response_data)
 
 
 
 
 @bp.route('/room/<string:room_id>/public/<int:post_id>', methods=('POST','GET'))
-@login_required  # ログインが必要なルート
+@login_required  
 @auth_required
 def post_public(room_id, post_id):
     post_id = int_check(post_id)
@@ -333,23 +332,23 @@ def post_public(room_id, post_id):
     cnt = int(post['public'])
 
     if cnt == 0:
-        db = get_db()  # データベース接続を取得
+        db = get_db()
         db.execute(
                 'UPDATE posts SET public = 1'
                 ' WHERE id = ? AND author_id = ?',
                 (post_id,user_id,)
             )
-        db.commit()  # 変更をコミット
+        db.commit() 
     else:
-        db = get_db()  # データベース接続を取得
+        db = get_db() 
         db.execute(
                 'UPDATE posts SET  public = 0 '
                 ' WHERE id = ? AND author_id = ?',
                 (post_id,user_id,)
             )  
-        db.commit()  # 変更をコミット
+        db.commit() 
     
     id_num = "#" + str(post_id)
 
     response_data =   redirect(url_for('meeting.meeting', room_id=room_id) + id_num)  
-    return secure_response_headers(response_data)# インデックスページにリダイレクト
+    return secure_response_headers(response_data)

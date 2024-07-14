@@ -33,15 +33,13 @@ def login_required(view):
 @bp.before_app_request
 def load_logged_in_user():
     # リクエストの前にログインしているユーザーを読み込む関数
-    id = session.get('id')  # セッションからユーザーIDを取得
-    user_id = session.get('user_id')  # セッションからユーザーIDを取得
+    id = session.get('id')  
+    user_id = session.get('user_id')
 
     if id is None or user_id is None:
-        # ユーザーIDがセッションにない場合、g.userをNoneに設定
         g.user = None
         g.owner = None
     else:
-        # ユーザーIDがセッションにある場合、データベースからユーザー情報を取得し、g.userに設定
         g.user = get_db().execute(
             'SELECT * FROM users WHERE id = ?', (id,)
         ).fetchone()
@@ -108,7 +106,7 @@ def register():
                 # 新しいユーザーをデータベースに挿入
                 db.execute(
                     "INSERT INTO users (user_id, nickname, password) VALUES (?, ?, ?)",
-                    (user_id, nickname, generate_password_hash(password)),  # パスワードをハッシュ化して保存
+                    (user_id, nickname, generate_password_hash(password)), 
                 )
                 db.commit()  # 変更をコミット
             except db.IntegrityError:
@@ -122,7 +120,6 @@ def register():
         # エラーがある場合、フラッシュメッセージを表示
         flash(error)
 
-    # GETリクエストの場合、登録ページを表示
     token = token_check('set')
     response_data = render_template('auth/register.html', sc_path = sc_path, num = num, token = token)
     return secure_response_headers(response_data)
@@ -194,7 +191,7 @@ def logout():
 
 
 @bp.route('/user', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required  
 def user():
     response_data = render_template('auth/user.html')
     return secure_response_headers(response_data)
@@ -203,7 +200,7 @@ def user():
 
 
 @bp.route('/nickname', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required 
 def nickname():
     if request.method == 'POST':
         # フォームがPOSTされた場合、フォームデータを取得
@@ -247,7 +244,7 @@ def nickname():
 
 
 @bp.route('/password', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required  
 def password():
     if request.method == 'POST':
         # フォームがPOSTされた場合、フォームデータを取得
@@ -304,7 +301,7 @@ def password():
 
 
 @bp.route('/delete', methods=('GET', 'POST'))
-@login_required  # ログインが必要なルート
+@login_required  # 
 def delete():
     if request.method == 'POST':
         user_id = request.form.get('user_id', default=None, type=str)
@@ -332,7 +329,7 @@ def delete():
         if error is None:
             id = session.get('id')
             db = get_db()  # データベース接続を取得
-            db.execute('DELETE FROM users WHERE id = ?', (id,))  # 投稿を削除
+            db.execute('DELETE FROM users WHERE id = ?', (id,)) 
             db.commit()  # 変更をコミット
 
             session.clear()  # セッションをクリアしてユーザーのログイン情報を削除
