@@ -37,7 +37,7 @@ def auth_required(view):
 def get_post(id, check_author=True, check_room=True, check_vote=False):
 
     try:
-        id = int(id)  # 文字列を実際にint関数で変換してみる
+        id = int(id)  
     except ValueError:
         abort(404, f"「Post ID」には数値を入力してだくさい。")
     else:
@@ -46,7 +46,7 @@ def get_post(id, check_author=True, check_room=True, check_vote=False):
             ' FROM posts p JOIN users u ON p.author_id = u.id'
             ' WHERE p.id = ?',
             (id,)
-        ).fetchone()  # 指定されたIDの投稿を取得
+        ).fetchone()
 
         if post is None:
             abort(404, f"「Post ID {id}」は存在しません。")  # 投稿が存在しない場合404エラー
@@ -260,8 +260,8 @@ def delete(room_id, post_id):
     post_id = int_check(post_id)
     room_id_check(room_id)
     get_post(post_id)  # 投稿を取得
-    db = get_db()  # データベース接続を取得
-    db.execute('DELETE FROM posts WHERE id = ?', (post_id,))  # 投稿を削除
+    db = get_db() 
+    db.execute('DELETE FROM posts WHERE id = ?', (post_id,))
     db.commit()  # 変更をコミット
     response_data =   redirect(url_for('meeting.meeting', room_id=room_id))  
     return secure_response_headers(response_data)# インデックスページにリダイレクト
@@ -294,7 +294,7 @@ def vote(room_id, post_id):
                 'INSERT INTO votes (post_id, user_id, room_id)'
                 ' VALUES (?, ?, ?)',
                 (post_id, user_id, room_id)
-            )  #   # 投稿を削除
+            ) 
         db.commit()  # 変更をコミット
     else:
         db = get_db()  # データベース接続を取得
@@ -302,7 +302,7 @@ def vote(room_id, post_id):
                 'DELETE FROM votes '
                 'WHERE post_id = ? AND user_id = ? AND room_id  = ?', 
                 (post_id, user_id, room_id)
-            )  # 投稿を削除
+            ) 
         db.commit()  # 変更をコミット
 
     id_num = "#" + str(post_id)
@@ -338,7 +338,7 @@ def post_public(room_id, post_id):
                 'UPDATE posts SET public = 1'
                 ' WHERE id = ? AND author_id = ?',
                 (post_id,user_id,)
-            )  #   # 投稿を削除
+            )
         db.commit()  # 変更をコミット
     else:
         db = get_db()  # データベース接続を取得
@@ -346,7 +346,7 @@ def post_public(room_id, post_id):
                 'UPDATE posts SET  public = 0 '
                 ' WHERE id = ? AND author_id = ?',
                 (post_id,user_id,)
-            )  # 投稿を削除
+            )  
         db.commit()  # 変更をコミット
     
     id_num = "#" + str(post_id)

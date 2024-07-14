@@ -13,6 +13,7 @@ CREATE TABLE users (
 );
 
 
+
 CREATE TABLE rooms (
   id INTEGER PRIMARY KEY AUTOINCREMENT, 
   create_user_id INTEGER NOT NULL,          
@@ -21,6 +22,7 @@ CREATE TABLE rooms (
   password TEXT NOT NULL ,             
   FOREIGN KEY (create_user_id) REFERENCES users (id) 
 );
+
 
 
 CREATE TABLE posts (
@@ -34,6 +36,7 @@ CREATE TABLE posts (
   FOREIGN KEY (author_id) REFERENCES users (id),  
   FOREIGN KEY (room_id) REFERENCES rooms (id)
 );
+
 
 
 CREATE TABLE votes (
