@@ -72,6 +72,13 @@ brainstor_meeting
 - アカウント機能(新規登録、ログイン、情報の変更、削除など)
 - ルーム管理機能(ルーム作成、ルーム編集、ルーム参加認証など)
 
+### 構成
+![構成図](images_for_readme/k.png)
+
+”[さくらのアイコンセット](https://knowledge.sakura.ad.jp/4724/ )” by SAKURA internet Inc.
+この作品は SAKURA internet Inc.さんの作品”[さくらのアイコンセット](https://knowledge.sakura.ad.jp/4724/ )”を改変して制作しました。この作品は”[クリエイティブ・コモンズ4.0国際ライセンス](https://creativecommons.org/licenses/by/4.0/)”の下に提供されています。 
+
+
 
 ### コマンド
 ローカルで実行するためのコマンド（MacBookの場合）
